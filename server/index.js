@@ -15,6 +15,10 @@ app.use(cors({credentials: true, origin: ["https://mern-blog-frontend-red.vercel
 app.use(upload())
 app.use('/uploads', express.static(__dirname + '/uploads'))
 
+app.get('/', (req, res) => {
+    res.json("Hello")
+})
+
 
 app.use('/api/users', userRoutes)
 app.use('/api/posts', postRoutes)
