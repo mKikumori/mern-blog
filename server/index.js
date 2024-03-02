@@ -28,5 +28,5 @@ app.use(notFound)
 app.use(errorHandler)
 
 
-connect(process.env.MONGO_URI).then(app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`))).catch(error => {console.log(error)})
+connect('mongodb+srv://kiku:WB9DiKBcoJa84LpT@cluster0.7zycfvs.mongodb.net/mern-blog').then(app.listen(5000, () => console.log(`Server running on port ${5000}`))).catch(error => {console.log(error)})
 
