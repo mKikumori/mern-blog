@@ -24,7 +24,7 @@ const createPost = async (req, res, next) => {
         let fileName = thumbnail.name
         let splittedFileName = fileName.split('.')
         let newFileName = splittedFileName[0] + uuid() + "." + splittedFileName[splittedFileName.length - 1]
-        test = async (err, newFileName) => {
+        thumbnail.mv(path.join(__dirname, '..', '/uploads', newFileName), async (err) => {
             if(!err) {
 
                 const newPost = await Post.create({title, category, description, thumbnail: newFileName, creator: req.user.id})
@@ -42,7 +42,7 @@ const createPost = async (req, res, next) => {
             } else {
                 return next(new HttpError(err))
             }
-        }
+        })
 
     } catch (error) {
         return next(new HttpError(error))
