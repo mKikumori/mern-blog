@@ -147,13 +147,6 @@ const editPost = async (req, res, next) => {
             updatedPost = await Post.findByIdAndUpdate(postId, {title, category, description}, {new: true})
         } else {
             
-
-            // delete old thumbnail from ./upload
-            fs.unlink(path.join(__dirname, '..', 'uploads', oldPost.thumbnail), async (err) => {
-                if(err) {
-                    return next(new HttpError(err))
-                }
-            })
             // upload new thumbnail
             const {thumbnail} = req.files
 
@@ -165,11 +158,6 @@ const editPost = async (req, res, next) => {
             fileName = thumbnail.name
             let splittedFileName = fileName.split('.')
             newFileName = splittedFileName[0] + uuid() + "."+ splittedFileName[splittedFileName.length - 1]
-            thumbnail.mv(path.join(__dirname, '..', 'uploads', newFileName), async (err) => {
-                if(err) {
-                    return next(new HttpError(err))
-                }
-            })
 
             updatedPost = await Post.findByIdAndUpdate(postId, {title, category, description, thumbnail: newFileName}, {new: true})
 
@@ -200,27 +188,18 @@ const deletePost = async (req, res, next) => {
         }
 
         const post = await Post.findById(postId)
-        const fileName = post?.thumbnail
 
         // check if the user logged in is the same as the one that posted the post
         if(req.user.id == post.creator) {
 
-        // delete thumbnail from uploads folder
-        fs.unlink(path.join(__dirname, '..', 'uploads', fileName), async (err) => {
-            if(err) {
-                return next(new HttpError(err))
-            } else {
+        await Post.findByIdAndDelete(postId)
 
-                await Post.findByIdAndDelete(postId)
+        // find user and reduce post count by 1
+        const currentUser = await User.findById(req.user.id)
+        const userPostCount = currentUser?.posts - 1
+        await User.findByIdAndUpdate(req.user.id, {posts: userPostCount})
+        res.json(`Post ${postId} deleted successfuly`)
 
-                // find user and reduce post count by 1
-                const currentUser = await User.findById(req.user.id)
-                const userPostCount = currentUser?.posts - 1
-                await User.findByIdAndUpdate(req.user.id, {posts: userPostCount})
-                res.json(`Post ${postId} deleted successfuly`)
-
-            }
-        })
     } else {
         return next(new HttpError("Post couldn't be deleted", 403))
     }   
