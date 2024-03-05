@@ -24,7 +24,7 @@ const createPost = async (req, res, next) => {
         let fileName = thumbnail.name
         let splittedFileName = fileName.split('.')
         let newFileName = splittedFileName[0] + uuid() + "." + splittedFileName[splittedFileName.length - 1]
-        async (err) => {
+        test = async (err) => {
             if(err) {
                 return next(new HttpError(err))
             } else {
