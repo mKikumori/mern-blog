@@ -24,10 +24,9 @@ const createPost = async (req, res, next) => {
         let fileName = thumbnail.name
         let splittedFileName = fileName.split('.')
         let newFileName = splittedFileName[0] + uuid() + "." + splittedFileName[splittedFileName.length - 1]
-        test = async (err) => {
-            if(err) {
-                return next(new HttpError(err))
-            } else {
+        test = async (err, newFileName) => {
+            if(!err) {
+
                 const newPost = await Post.create({title, category, description, thumbnail: newFileName, creator: req.user.id})
                 if(!newPost) {
                     return next(new HttpError("Post couldn't be created", 422))
@@ -39,6 +38,9 @@ const createPost = async (req, res, next) => {
                 await User.findByIdAndUpdate(req.user.id, {posts: userPostCount})
 
                 res.status(201).json(newPost)
+
+            } else {
+                return next(new HttpError(err))
             }
         }
 
