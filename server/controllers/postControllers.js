@@ -153,10 +153,8 @@ const editPost = async (req, res, next) => {
             }
             
             fileName = thumbnail.name
-            let splittedFileName = fileName.split('.')
-            newFileName = splittedFileName[0] + uuid() + "."+ splittedFileName[splittedFileName.length - 1]
 
-            updatedPost = await Post.findByIdAndUpdate(postId, {title, category, description, thumbnail: newFileName}, {new: true})
+            updatedPost = await Post.findByIdAndUpdate(postId, {title, category, description, thumbnail: fileName}, {new: true})
 
         }
         
