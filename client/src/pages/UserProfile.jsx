@@ -84,8 +84,9 @@ const UserProfile = () => {
   const handleFileUpload = async (e) => {
     const file = e.target.files[0]
     const base64 = await convertToBase64(file)
-    setAvatar({ ...avatar, myFile : base64 })
+    setAvatar(base64)
     console.log(`TEST 1: ${avatar}`)
+    console.log(`TEST 4: ${base64}`)
   }
 
   return (
