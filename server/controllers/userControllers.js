@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const path = require('path')
-const {v4: uuid} = require('uuid')
 
 // POST to register new user
 // api/users/register

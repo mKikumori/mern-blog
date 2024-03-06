@@ -2,7 +2,6 @@ const Post = require('../models/postModel.js')
 const User = require('../models/userModel.js')
 const path = require('path')
 const fs = require('fs')
-const {v4: uuid} = require('uuid')
 const HttpError = require('../models/errorModel.js')
 
 // POST to Create a post
