@@ -61,6 +61,15 @@ const CreatePost = () => {
     }
   }
 
+  function encodedImageFileAsURL(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+      console.log('RESULT', reader.result)
+    }
+    reader.readAsDataURL(file);
+  }
+
   return (
     <section className="create-post">
       <div className="container">
@@ -74,7 +83,7 @@ const CreatePost = () => {
             }
             </select>
           <ReactQuill modules={modules} formats={formats} value={description} onChange={setDescription}/>
-          <input type="file" onChange={e => setThumbnail(e.target.files[0])} accept='png, jpg, jpeg'/>
+          <input type="file" onChange={encodedImageFileAsURL(this)} accept='png, jpg, jpeg'/>
           <button type="submit" className='btn primary'>Create</button>
         </form>
       </div>
