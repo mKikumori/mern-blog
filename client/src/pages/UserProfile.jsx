@@ -38,6 +38,7 @@ const UserProfile = () => {
       setName(name)
       setEmail(email)
       setAvatar(avatar)
+      console.log(`TEST 3: ${avatar}`)
     }
 
     getUser()
@@ -52,6 +53,7 @@ const UserProfile = () => {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/users/change-avatar`, postData, 
       {withCredentials: true, headers: {Authorization: `Bearer ${token}`}})
       setAvatar(response?.data.avatar)
+      console.log(`TEST 2: ${avatar}`)
       
     } catch (err) {
       setError(err.response.data.message)
@@ -82,8 +84,8 @@ const UserProfile = () => {
   const handleFileUpload = async (e) => {
     const file = e.target.files[0]
     const base64 = await convertToBase64(file)
-    console.log(base64)
     setAvatar({ ...avatar, myFile : base64 })
+    console.log(`TEST 1: ${avatar}`)
   }
 
   return (
