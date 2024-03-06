@@ -4,10 +4,11 @@ import { FaEdit } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { UserContext } from '../context/userContext';
 import axios from 'axios'
+import convertToBase64 from '../convert'
 
 const UserProfile = () => {
 
-  const [avatar, setAvatar] = useState('')
+  const [avatar, setAvatar] = useState({avatar: ''})
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [currentPassword, setCurrentPassword] = useState('')
@@ -78,9 +79,11 @@ const UserProfile = () => {
     }
   }
 
-  const onUpload = async e => {
-    const base64 = await convertToBase64(e.target.files[0]);
-    setThumbnail(base64)
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0]
+    const base64 = await convertToBase64(file)
+    console.log(base64)
+    setAvatar({ ...avatar, myFile : base64 })
   }
 
   return (
@@ -95,7 +98,7 @@ const UserProfile = () => {
             </div>
             {/* User select profile picture form */}
             <form className="avatar__form">
-              <input type="file" name='avatar' id='avatar' accept='png, jpg, jpeg' onChange={onUpload}/>
+              <input type="file" name='avatar' id='avatar' accept='png, jpg, jpeg' onChange={(e) => handleFileUpload(e)}/>
               <label htmlFor="avatar" onClick={() => setIsAvatarTouched(true)}><FaEdit/></label>
               
             </form>
