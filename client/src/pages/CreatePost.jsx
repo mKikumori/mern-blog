@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css'
 import { UserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import convertToBase64 from '../convert'
 
 const CreatePost = () => {
 
@@ -61,6 +62,11 @@ const CreatePost = () => {
     }
   }
 
+  const onUpload = async e => {
+    const base64 = await convertToBase64(e.target.files[0]);
+    setThumbnail(base64)
+  }
+
   return (
     <section className="create-post">
       <div className="container">
@@ -74,7 +80,7 @@ const CreatePost = () => {
             }
             </select>
           <ReactQuill modules={modules} formats={formats} value={description} onChange={setDescription}/>
-          <input type="file" onChange={e => setThumbnail(e.target.files[0])} accept='png, jpg, jpeg'/>
+          <input type="file" onChange={onUpload} accept='png, jpg, jpeg'/>
           <button type="submit" className='btn primary'>Create</button>
         </form>
       </div>

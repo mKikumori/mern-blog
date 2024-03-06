@@ -22,12 +22,10 @@ const createPost = async (req, res, next) => {
             return next(new HttpError("Thumbnail too big. Fiile should be less than 2Mb"))
         }
         let fileName = thumbnail.name
-        let splittedFileName = fileName.split('.')
-        let newFileName = splittedFileName[0] + uuid() + "." + splittedFileName[splittedFileName.length - 1]
-        thumbnail.mv(path.join(__dirname, '..', '/uploads', newFileName), async (err) => {
+        thumbnail.mv(path.join(__dirname, '..', '/uploads', fileName), async (err) => {
             if(!err) {
 
-                const newPost = await Post.create({title, category, description, thumbnail: newFileName, creator: req.user.id})
+                const newPost = await Post.create({title, category, description, thumbnail: fileName, creator: req.user.id})
                 if(!newPost) {
                     return next(new HttpError("Post couldn't be created", 422))
                 }
