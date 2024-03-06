@@ -18,7 +18,7 @@ const createPost = async (req, res, next) => {
 
         // check thumbnail size
         if(thumbnail.size > 2000000) {
-            return next(new HttpError("Thumbnail too big. Fiile should be less than 2Mb"))
+            return next(new HttpError("Thumbnail too big. File should be less than 2Mb"))
         }
         let fileName = thumbnail.name
         thumbnail.mv(path.join(__dirname, '..', '/uploads', fileName), async (err) => {

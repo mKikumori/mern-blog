@@ -11,7 +11,7 @@ const CreatePost = () => {
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('Uncategorized')
   const [description, setDescription] = useState('')
-  const [thumbnail, setThumbnail] = useState('')
+  const [thumbnail, setThumbnail] = useState({myFile : ''})
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
@@ -62,9 +62,11 @@ const CreatePost = () => {
     }
   }
 
-  const onUpload = async e => {
-    const base64 = await convertToBase64(e.target.files[0]);
-    setThumbnail(base64)
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0]
+    const base64 = await convertToBase64(file)
+    console.log(base64)
+    setThumbnail({ ...thumbnail, myFile : base64 })
   }
 
   return (
@@ -80,7 +82,7 @@ const CreatePost = () => {
             }
             </select>
           <ReactQuill modules={modules} formats={formats} value={description} onChange={setDescription}/>
-          <input type="file" onChange={e => setThumbnail(e.target.files[0])} accept='png, jpg, jpeg'/>
+          <input onChange={(e) => handleFileUpload(e)} id='imageUpload' type="file" lable="Image" name='myFile' accept='png, jpg, jpeg'/>
           <button type="submit" className='btn primary'>Create</button>
         </form>
       </div>

@@ -104,12 +104,6 @@ const changeAvatar = async (req, res, next) => {
             return next(new HttpError("Please choose an image", 422))
         }
 
-        // find user from database
-        const user = await User.findById(req.user.id)
-
-        // delete old avatar if exists
-        
-
         const {avatar} = req.files
 
         // check file size

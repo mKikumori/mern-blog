@@ -78,6 +78,11 @@ const UserProfile = () => {
     }
   }
 
+  const onUpload = async e => {
+    const base64 = await convertToBase64(e.target.files[0]);
+    setThumbnail(base64)
+  }
+
   return (
     <section className="profile">
       <div className="container profile__container">
@@ -90,7 +95,7 @@ const UserProfile = () => {
             </div>
             {/* User select profile picture form */}
             <form className="avatar__form">
-              <input type="file" name='avatar' id='avatar' accept='png, jpg, jpeg' onChange={e => {setAvatar(e.target.files[0])}}/>
+              <input type="file" name='avatar' id='avatar' accept='png, jpg, jpeg' onChange={onUpload}/>
               <label htmlFor="avatar" onClick={() => setIsAvatarTouched(true)}><FaEdit/></label>
               
             </form>
