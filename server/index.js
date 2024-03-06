@@ -13,7 +13,6 @@ app.use(express.json({extended: true}))
 app.use(express.urlencoded({extended: true}))
 app.use(cors({credentials: true, origin: ["https://mern-blog-client-vrn5.onrender.com"], methods: ["POST", "GET", "PATCH", "DELETE"]}))
 app.use(upload())
-app.use('/uploads', express.static(__dirname + '/uploads'))
 
 app.get('/', (req, res) => {
     res.json("Hello")

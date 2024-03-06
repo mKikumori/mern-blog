@@ -97,7 +97,7 @@ const UserProfile = () => {
         <div className="profile__details">
           <div className="avatar__wrapper">
             <div className="profile__avatar">
-              <img src={`${process.env.REACT_APP_ASSETS_URL}/uploads/${avatar}`} alt="Avatar picture" />
+              <img src={avatar} alt="Avatar picture" />
             </div>
             {/* User select profile picture form */}
             <form className="avatar__form">
