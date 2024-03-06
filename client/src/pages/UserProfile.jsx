@@ -54,9 +54,11 @@ const UserProfile = () => {
       {withCredentials: true, headers: {Authorization: `Bearer ${token}`}})
       setAvatar(response?.data.avatar)
       console.log(`TEST 2: ${avatar}`)
+      console.log(`TEST 5: ${response?.data.avatar}`)
       
     } catch (err) {
       setError(err.response.data.message)
+      console.log(`TEST 5: ${response?.data.avatar}`)
     }
   }
 
