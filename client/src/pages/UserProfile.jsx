@@ -90,7 +90,6 @@ const UserProfile = () => {
     const file = e.target.files[0]
     const base64 = await convertToBase64(file)
     setAvatar(base64)
-    setAvatar({...avatar, base64})
     console.log(`TEST 1: ${avatar}`)
     console.log(`TEST 4: ${base64}`)
   }
@@ -116,7 +115,7 @@ const UserProfile = () => {
           
           <h1>{currentUser.name}</h1>
 
-          {/* form ro update User details */}
+          {/* form to update User details */}
           <form className="form profile__form" onSubmit={updateUserDetails}>
             {error && <p className='form__error-message'>{error}</p>}
             <input type="text" placeholder='Full Name' value={name} onChange={e => setName(e.target.value)}/>
